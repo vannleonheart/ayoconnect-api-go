@@ -2,6 +2,7 @@ package ayoconnect
 
 import (
 	"fmt"
+	"github.com/vannleonheart/goutil"
 )
 
 func (c *Client) AddBeneficiary(transactionId, accountNo, bankCode string) (*BeneficiaryResponse, error) {
@@ -49,7 +50,7 @@ func (c *Client) AddBeneficiary(transactionId, accountNo, bankCode string) (*Ben
 
 	var result BeneficiaryResponse
 
-	if err := sendHttpPost(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpPost(targetUrl, &requestData, &requestHeaders, &result); err != nil {
 		return nil, err
 	}
 
@@ -88,7 +89,7 @@ func (c *Client) Disburse(transactionId, customerId, beneficiaryId, amount, curr
 
 	var result TransactionResponse
 
-	if err := sendHttpPost(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpPost(targetUrl, &requestData, &requestHeaders, &result); err != nil {
 		return nil, err
 	}
 
@@ -131,7 +132,7 @@ func (c *Client) GetDisbursementStatusByCorrelationId(correlationId, transaction
 
 	var result TransactionResponse
 
-	if err := sendHttpGet(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpGet(targetUrl, &requestData, &requestHeaders, &result); err != nil {
 		return nil, err
 	}
 
@@ -143,9 +144,10 @@ func (c *Client) GetBalance() (*BalanceResponse, error) {
 		return nil, err
 	}
 
+	randomString := goutil.NewRandomString("")
 	targetUrl := fmt.Sprintf("%s/api/v1/merchants/balance", c.Config.BaseUrl)
 	requestId := c.requestId
-	transactionId := RandomString(32)
+	transactionId := randomString.Generate(32)
 
 	c.requestId = ""
 
@@ -163,7 +165,7 @@ func (c *Client) GetBalance() (*BalanceResponse, error) {
 
 	var result BalanceResponse
 
-	if err := sendHttpGet(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpGet(targetUrl, &requestData, &requestHeaders, &result); err != nil {
 		return nil, err
 	}
 
