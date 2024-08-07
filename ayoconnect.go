@@ -65,7 +65,7 @@ func (c *Client) Authenticate() (*AuthenticationResponse, error) {
 
 	var result AuthenticationResponse
 
-	if _, err := goutil.SendHttpPost(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpPost(targetUrl, &requestData, &requestHeaders, &result, nil); err != nil {
 		return nil, err
 	}
 

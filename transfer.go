@@ -50,7 +50,7 @@ func (c *Client) AddBeneficiary(transactionId, accountNo, bankCode string) (*Ben
 
 	var result BeneficiaryResponse
 
-	if _, err := goutil.SendHttpPost(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpPost(targetUrl, &requestData, &requestHeaders, &result, nil); err != nil {
 		return nil, err
 	}
 
@@ -89,7 +89,7 @@ func (c *Client) Disburse(transactionId, customerId, beneficiaryId, amount, curr
 
 	var result TransactionResponse
 
-	if _, err := goutil.SendHttpPost(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpPost(targetUrl, &requestData, &requestHeaders, &result, nil); err != nil {
 		return nil, err
 	}
 
@@ -132,7 +132,7 @@ func (c *Client) GetDisbursementStatusByCorrelationId(correlationId, transaction
 
 	var result TransactionResponse
 
-	if _, err := goutil.SendHttpGet(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpGet(targetUrl, &requestData, &requestHeaders, &result, nil); err != nil {
 		return nil, err
 	}
 
@@ -165,7 +165,7 @@ func (c *Client) GetBalance() (*BalanceResponse, error) {
 
 	var result BalanceResponse
 
-	if _, err := goutil.SendHttpGet(targetUrl, &requestData, &requestHeaders, &result); err != nil {
+	if _, err := goutil.SendHttpGet(targetUrl, &requestData, &requestHeaders, &result, nil); err != nil {
 		return nil, err
 	}
 
